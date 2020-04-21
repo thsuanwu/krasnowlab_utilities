@@ -32,7 +32,7 @@ reference_genomes = {
     "microcebus": "MicMur3-PLUS",
     "gencode.vM19": "gencode.vM19",
     "GRCh38_premrna": "GRCh38_premrna",
-    "zebrafish-plus": "danio_rerio_plus_STAR2.6.1d"
+    "zebrafish-plus": "danio_rerio_plus_STAR2.6.1d",
     "SARS.GRCh38_genome": "SARS.GRCh38_genome"
 }
 
