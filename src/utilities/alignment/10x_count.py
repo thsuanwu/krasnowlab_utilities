@@ -33,6 +33,7 @@ reference_genomes = {
     "gencode.vM19": "gencode.vM19",
     "GRCh38_premrna": "GRCh38_premrna",
     "zebrafish-plus": "danio_rerio_plus_STAR2.6.1d"
+    "SARS.GRCh38_genome": "SARS.GRCh38_genome"
 }
 
 deprecated = {"homo", "mus", "mus-premrna"}
