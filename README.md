@@ -148,25 +148,53 @@ If you want to stick the results somewhere other than czb-seqbot/fastqs, you can
 
 ### How to align some stuff:
 
-*Important change: you need to explicitly specify the input and output paths for your alignment.*
+#### How to choose the right genome (--taxon argument in running the alignment job):
 
-To the run the first of ten partitions:
+To choose the right genome as the --taxon input, first decide on the species of the sample as well as the technology used for alignment jobs, then select from the reference genomes of that species.
+The following is the 10X_reference_genomes dictionary used in cellranger alignment jobs of 10X data, with input argument in alignment jobs as keys, and reference genome name in S3 bucket as values:
 
 ```zsh
-(utilities-env) ➜ evros alignment.run_star_and_htseq --taxon mm10-plus --num_partitions 10 --partition_id 0 --s3_input_path s3://input-bucket/path/to/fastqs --s3_output_path s3://output-bucket/path/for/results
+10X_reference_genomes = {
+    "homo": "HG38-PLUS",
+    "hg38-plus": "HG38-PLUS",
+    "homo.gencode.v30.ERCC.chrM": "homo.gencode.v30.annotation.ERCC92",
+    "mus": "MM10-PLUS",
+    "mm10-plus": "MM10-PLUS",
+    "mm10-1.2.0": "mm10-1.2.0",
+    "mus-premrna": "mm10-1.2.0-premrna",
+    "mm10-1.2.0-premrna": "mm10-1.2.0-premrna",
+    "hg19-mm10-3.0.0": "hg19-mm10-3.0.0",
+    "microcebus": "MicMur3-PLUS",
+    "gencode.vM19": "gencode.vM19",
+    "GRCh38_premrna": "GRCh38_premrna",
+    "zebrafish-plus": "danio_rerio_plus_STAR2.6.1d",
+    "SARS.GRCh38_genome": "SARS.GRCh38_genome"
+}
+```  
+
+The genomes above span four species: human, mouse, mouse lemur, and zebrafish. There is an additional genome that contains both the human GRCh38 and SARS-CoV2 genomes combined, SARS.GRCh38_genome. Cellranger reference genomes are built according to the [cellranger reference building instruction](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/tutorial_mr#mkrefsetup), taking fasta and gtf files as inputs. Some of the reference genomes are directly available online, and others need to be built from fasta and gtf files. The following sections explain how to find these.
+We start with human genomes:
+```zsh
+human_genomes = {
+    "homo": "HG38-PLUS"
+    "hg38-plus": "HG38-PLUS"
+    "homo.gencode.v30.ERCC.chrM": "homo.gencode.v30.annotation.ERCC92"
+    "GRCh38_premrna": "GRCh38_premrna"
+}
 ```
 
-This will find all `.fastq.gz` files under the given input path and align them to to the MM10-PLUS genome.
+The first and second keys point to the same genome, and that's because the first one - "homo" - is deprecated. Other than that, genome "HG38-PLUS" is taken from the homo sapiens genome from UCSC, available on the website of [Illumina iGenomes](https://support.illumina.com/sequencing/sequencing_software/igenome.html). The third genome, "homo.gencode.v30.annotation.ERCC92", is taken from [GENCODE Human Release 30](https://www.gencodegenes.org/human/release_30.html). "chrM" in the key means mitochondria chromosomes - thus genes - are included in this genome, and "[ERCC92](https://www.thermofisher.com/order/catalog/product/4456740#/4456740)" means external controls of RNA variations are applied, using 92 transcripts. The last genome, "GRCh38_premrna", is taken from [Ensembl](https://uswest.ensembl.org/Homo_sapiens/Info/Index), where "premrna" means the genome includes unspliced RNA.
 
-You can use this helper script to create a bunch of commands:
-
+Then we move to mouse genomes:
 ```zsh
-(utilities-env) ➜ aws_star mm10-plus 10 --s3_input_path s3://input-bucket/path/to/fastqs --s3_output_path s3://output-bucket/path/for/results > my_star_jobs.sh
-(utilities-env) ➜ cat my_star_jobs.sh
-evros --branch master alignment.run_star_and_htseq --taxon mus --num_partitions 10 --partition_id 0 --s3_input_path s3://input-bucket/path/to/fastqs --s3_output_path s3://output-bucket/path/for/results
-sleep 10
-[...lots more...]
-(utilities-env) ➜ source my_star_jobs.sh
+mouse_genomes = {
+    "mus": "MM10-PLUS"
+    "mm10-plus": "MM10-PLUS"
+    "mm10-1.2.0": "mm10-1.2.0"
+    "mus-premrna": "mm10-1.2.0-premrna"
+    "mm10-1.2.0-premrna": "mm10-1.2.0-premrna"
+    "gencode.vM19": "gencode.vM19"
+}
 ```
 
 #### How to check for failed alignment jobs:
