@@ -9,7 +9,7 @@ import subprocess
 import utilities.log_util as ut_log
 
 
-REPO_ADDRESS = "https://github.com/czbiohub/utilities.git"
+REPO_ADDRESS = "https://github.com/thsuanwu/utilities.git"
 
 
 # helper function to check arguments are within a given range
@@ -34,7 +34,7 @@ def main():
             "Run batch jobs on AWS\n"
             "e.g. evros [options] demux.bcl2fastq [script args...]"
         ),
-        epilog="See https://github.com/czbiohub/utilities for more examples",
+        epilog="See https://github.com/thsuanwu/utilities for more examples",
         add_help=False,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
@@ -54,10 +54,10 @@ def main():
     instance_group = parser.add_argument_group("customize the instance")
     image_group = instance_group.add_mutually_exclusive_group()
     image_group.add_argument(
-        "--ecr-image",
-        metavar="ECR",
-        default="demuxer",
-        help="ECR image to use for the job",
+        "--image",
+        metavar="Docker Image",
+        default="thsuanwu/cellranger",
+        help="Docker image to use for the job",
     )
 
     instance_group.add_argument(
@@ -148,10 +148,10 @@ def main():
 
     job_command = "; ".join(
         (
-            "PATH=$HOME/anaconda/bin:$PATH",
+            "PATH=/opt/conda/bin:${PATH}",
+            "source activate utilities-env",
+            "git clone {}".format(REPO_ADDRESS),
             "cd utilities",
-            "git pull",
-            f"git checkout {args.branch}",
             "python setup.py install",
             f"python -m utilities.{args.script_name} {' '.join(args.script_args)}",
         )
@@ -167,8 +167,8 @@ def main():
         str(args.vcpus),
         "--memory",
         str(args.memory),
-        "--ecr-image",
-        args.ecr_image,
+        "--image",
+        args.image,
     ]
 
     if args.storage:

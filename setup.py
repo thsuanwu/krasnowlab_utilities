@@ -22,7 +22,7 @@ setuptools.setup(
     long_description=read("README.md"),
     author="James Webber",
     author_email="james.webber@czbiohub.org",
-    url="https://github.com/czbiohub/utilities",
+    url="https://github.com/thsuanwu/utilities",
     packages=setuptools.find_packages("src"),
     package_dir={"": "src"},
     py_modules=[
