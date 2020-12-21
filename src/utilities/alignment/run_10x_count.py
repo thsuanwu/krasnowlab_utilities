@@ -115,8 +115,8 @@ def get_parser():
 
     parser.add_argument(
         "--region",
-        default="west",
-        choices=("east", "west"),
+        default="krasnow",
+        choices=("east", "west", "krasnow"),
         help=(
             "Region you're running jobs in."
             " Should match the location of"
