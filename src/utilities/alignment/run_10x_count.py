@@ -15,13 +15,14 @@ import boto3
 
 
 # reference genome bucket name for different regions
-S3_REFERENCE = {"east": "czbiohub-reference-east", "west": "czbiohub-reference"}
+S3_REFERENCE = {"east": "czbiohub-reference-east", "west": "czbiohub-reference", "krasnow" : "krasnow/thsuanwu/czbiohub-reference"}
 
 # valid and deprecated reference genomes
 reference_genomes = {
     "homo": "HG38-PLUS",
     "hg38-plus": "HG38-PLUS",
     "homo.gencode.v30.ERCC.chrM": "homo.gencode.v30.annotation.ERCC92",
+    "homo.gencode.v30.ERCC.chrM.sars.cov2.wa1": "homo.gencode.v30.annotation.ERCC92_and_sars.cov2.wa1",
     "mus": "MM10-PLUS",
     "mm10-plus": "MM10-PLUS",
     "mm10-1.2.0": "mm10-1.2.0",
@@ -69,6 +70,10 @@ def get_parser():
         required=True,
         choices=list(reference_genomes.keys()),
         help="Reference genome for the alignment run",
+    )
+
+    requiredNamed.add_argument(
+        "--sample_prefix", required=True, help="Specify sample prefix" # what is this for?
     )
 
     requiredNamed.add_argument(
@@ -203,6 +208,10 @@ def main(logger):
         "cp",
         "--no-progress",
         "--recursive",
+        "--exclude",
+        "'*'",
+        "--include",
+        f"'{args.sample_prefix}*'",
         "--force-glacier-transfer" if args.glacier else "",
         args.s3_input_path,
         f"{fastq_path}",
