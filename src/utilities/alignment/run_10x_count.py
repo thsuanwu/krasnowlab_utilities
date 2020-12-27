@@ -15,7 +15,7 @@ import boto3
 
 
 # reference genome bucket name for different regions
-S3_REFERENCE = {"east": "czbiohub-reference-east", "west": "czbiohub-reference", "krasnow" : "krasnow/thsuanwu/czbiohub-reference"}
+S3_REFERENCE = {"east": "czbiohub-reference-east", "west": "czbiohub-reference", "krasnow" : "krasnow"}
 
 # valid and deprecated reference genomes
 reference_genomes = {
