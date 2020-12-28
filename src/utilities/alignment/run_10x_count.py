@@ -48,7 +48,7 @@ S3_RETRY = 5
 
 def get_default_requirements():
     return argparse.Namespace(
-        vcpus=64, memory=256000, storage=2000, ecr_image="demuxer"
+        vcpus=64, memory=256000, storage=2000, image="thsuanwu/cellranger"
     )
 
 
