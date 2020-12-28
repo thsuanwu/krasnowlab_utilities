@@ -149,6 +149,7 @@ def main():
     job_command = "; ".join(
         (
             "PATH=/opt/conda/bin:${PATH}",
+            "echo $PATH"
             "source activate utilities-env",
             "git clone {}".format(REPO_ADDRESS),
             "cd utilities",
