@@ -72,9 +72,9 @@ def get_parser():
         help="Reference genome for the alignment run",
     )
 
-    #requiredNamed.add_argument(
-    #    "--sample_prefix", required=True, help="Specify sample prefix" # what is this for?
-    #)
+    requiredNamed.add_argument(
+        "--sample_prefix", required=True, help="Specify sample prefix" # what is this for?
+    )
 
     requiredNamed.add_argument(
         "--s3_input_path", required=True, help="The folder with fastq.gz files to align"
@@ -208,10 +208,10 @@ def main(logger):
         "cp",
         "--no-progress",
         "--recursive",
-        #"--exclude",
-        #"'*'",
-        #"--include",
-        #f"'{args.sample_prefix}*'",
+        "--exclude",
+        "'*'",
+        "--include",
+        f"'{args.sample_prefix}*'",
         "--force-glacier-transfer" if args.glacier else "",
         args.s3_input_path,
         f"{fastq_path}",
