@@ -38,6 +38,20 @@ def get_folders(bucket="czb-seqbot", prefix=None):
         if "CommonPrefixes" in response_data:
             yield from (c["Prefix"] for c in response_data["CommonPrefixes"])
 
+def list_s3_keys(bucket="czb-seqbot", prefix=None, suffix=''):
+    """List the file under a specific path in a bucket. Can specify prefix and suffix
+    """                                                                                                                                                                                                                        
+    params = {'Bucket': bucket}                                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                                           
+    if isinstance(prefix, str):                                                                                                                                                                                                                                           
+        params['Prefix'] = prefix                                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                                                           
+    paginator = s3c.get_paginator('list_objects_v2')                                                                                                                                                                                                                
+    for result in paginator.paginate(**params):                                                                                                                                                                                                                           
+        for obj in result['Contents']:                                                                                                                                                                                                                                    
+            key = obj['Key']                                                                                                                                                                                                                                              
+            if key.startswith(prefix) and key.endswith(suffix):                                                                                                                                                                                                           
+                yield key
 
 def prefix_gen(bucket, prefix, fn=None):
     """Generic generator of fn(result) from an S3 paginator"""

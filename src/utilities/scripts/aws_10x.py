@@ -3,10 +3,11 @@
 import argparse
 import warnings
 import posixpath
+import glob, os
 
 from utilities.alignment.run_10x_count import reference_genomes, deprecated
-import utilities.s3_util as s3u
-
+#import utilities.s3_util as s3u
+import s3_util as s3u
 
 def main():
     parser = argparse.ArgumentParser(
@@ -40,6 +41,14 @@ def main():
     )
 
     # optional arguments
+    requiredNamed.add_argument(
+        "--by_folder",
+        required=False,
+        type=bool,
+        default=False,
+        help="Whether to parse run by sample folder or by sample prefix. Default is to use sample fastq files in same folder.",
+    )
+
     parser.add_argument(
         "--branch", default="master", help="Branch of utilities repo to use"
     )
@@ -65,18 +74,41 @@ def main():
 
     # get the list of sample folder paths under the input folder
     s3_input_bucket, s3_input_prefix = s3u.s3_bucket_and_key(args.s3_input_path)
+    
     s3_input_prefix += "/"
     sample_folder_paths = [
         folder_path for folder_path in s3u.get_folders(s3_input_bucket, s3_input_prefix)
     ]
+
+    # get the list of sample fastq paths under the input folder
+    if args.by_folder == False: # Then parse by sample
+        s3_input_bucket, s3_input_prefix = s3u.s3_bucket_and_key(args.s3_input_path)
+        sample_fastq_paths = [
+            fastq_path for fastq_path in s3u.list_s3_keys(s3_input_bucket, s3_input_prefix, "fastq.gz")
+        ]
+    
+        sample_fastq_prefixes = {
+        os.path.basename(fn).rsplit("_", 4)[0] for fn in sample_fastq_paths
+        }
+
+        if "Undetermined" in sample_fastq_prefixes:
+            sample_fastq_prefixes.remove("Undetermined")
+        print(sample_fastq_prefixes)
+
+
+    
+
     complete_input_paths = [
         "s3://" + s3_input_bucket + "/" + path for path in sample_folder_paths
     ]
+
+    #print(complete_input_paths)
 
     # print input arguments of running alignment.run_10x_count for each sample folder
     num_partitions = len(complete_input_paths)
     glacier_flag = '--glacier' if args.glacier else ''
     for i in range(num_partitions):
+        complete_input_paths = list(complete_input_paths) # convert to list type for iterating
         s3_input_path = complete_input_paths[i]
         print(
             " ".join(
@@ -95,3 +127,6 @@ def main():
             )
         )
         print("sleep 10")
+
+if __name__ == "__main__":
+    main()
