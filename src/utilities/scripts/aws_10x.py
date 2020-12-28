@@ -6,8 +6,7 @@ import posixpath
 import glob, os
 
 from utilities.alignment.run_10x_count import reference_genomes, deprecated
-#import utilities.s3_util as s3u
-import s3_util as s3u
+import utilities.s3_util as s3u
 
 def main():
     parser = argparse.ArgumentParser(
@@ -108,7 +107,6 @@ def main():
     num_partitions = len(complete_input_paths)
     glacier_flag = '--glacier' if args.glacier else ''
     for i in range(num_partitions):
-        complete_input_paths = list(complete_input_paths) # convert to list type for iterating
         s3_input_path = complete_input_paths[i]
         print(
             " ".join(
