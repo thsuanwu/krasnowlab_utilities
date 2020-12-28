@@ -72,15 +72,42 @@ def main():
         raise ValueError(f"unknown taxon {args.taxon}")
 
     # get the list of sample folder paths under the input folder
-    s3_input_bucket, s3_input_prefix = s3u.s3_bucket_and_key(args.s3_input_path)
+    if args.by_folder:
+        s3_input_bucket, s3_input_prefix = s3u.s3_bucket_and_key(args.s3_input_path)
     
-    s3_input_prefix += "/"
-    sample_folder_paths = [
-        folder_path for folder_path in s3u.get_folders(s3_input_bucket, s3_input_prefix)
-    ]
-
+        s3_input_prefix += "/"
+        sample_folder_paths = [
+            folder_path for folder_path in s3u.get_folders(s3_input_bucket, s3_input_prefix)
+        ]
+        
+        complete_input_paths = [
+            "s3://" + s3_input_bucket + "/" + path for path in sample_folder_paths
+        ]
+        # print input arguments of running alignment.run_10x_count for each sample folder
+        num_partitions = len(complete_input_paths)
+        glacier_flag = '--glacier' if args.glacier else ''
+        for i in range(num_partitions):
+            s3_input_path = complete_input_paths[i]
+            print(
+                " ".join(
+                    (
+                        "evros",
+                        f"--branch {args.branch}",
+                        "alignment.run_10x_count",
+                        glacier_flag,
+                        f"--taxon {args.taxon}",
+                        f"--num_partitions {num_partitions}",
+                        f"--partition_id {i}",
+                        f"--s3_input_path {s3_input_path}",
+                        f"--s3_output_path {args.s3_output_path}",
+                        " ".join(args.script_args),
+                    )
+                )
+            )
+            print("sleep 10")
+        
+    else:
     # get the list of sample fastq paths under the input folder
-    if args.by_folder == False: # Then parse by sample
         s3_input_bucket, s3_input_prefix = s3u.s3_bucket_and_key(args.s3_input_path)
         sample_fastq_paths = [
             fastq_path for fastq_path in s3u.list_s3_keys(s3_input_bucket, s3_input_prefix, "fastq.gz")
@@ -92,39 +119,33 @@ def main():
 
         if "Undetermined" in sample_fastq_prefixes:
             sample_fastq_prefixes.remove("Undetermined")
-        print(sample_fastq_prefixes)
+        
+        s3_input_path = "s3://" + s3_input_bucket + "/" + s3_input_prefix
 
+        sample_fastq_prefixes = list(sample_fastq_prefixes) # convert to list type for iteration
+        num_partitions = len(sample_fastq_prefixes)
+        glacier_flag = '--glacier' if args.glacier else ''
 
-    
-
-    complete_input_paths = [
-        "s3://" + s3_input_bucket + "/" + path for path in sample_folder_paths
-    ]
-
-    #print(complete_input_paths)
-
-    # print input arguments of running alignment.run_10x_count for each sample folder
-    num_partitions = len(complete_input_paths)
-    glacier_flag = '--glacier' if args.glacier else ''
-    for i in range(num_partitions):
-        s3_input_path = complete_input_paths[i]
-        print(
-            " ".join(
-                (
-                    "evros",
-                    f"--branch {args.branch}",
-                    "alignment.run_10x_count",
-                    glacier_flag,
-                    f"--taxon {args.taxon}",
-                    f"--num_partitions {num_partitions}",
-                    f"--partition_id {i}",
-                    f"--s3_input_path {s3_input_path}",
-                    f"--s3_output_path {args.s3_output_path}",
-                    " ".join(args.script_args),
+        for i in range(num_partitions):
+            sample_fastq_prefix = sample_fastq_prefixes[i]
+            print(
+                " ".join(
+                    (
+                        "evros",
+                        f"--branch {args.branch}",
+                        "alignment.run_10x_count",
+                        glacier_flag,
+                        f"--taxon {args.taxon}",
+                        f"--num_partitions {num_partitions}",
+                        f"--partition_id {i}",
+                        f"--sample_prefix {sample_fastq_prefix}",
+                        f"--s3_input_path {s3_input_path}",
+                        f"--s3_output_path {args.s3_output_path}",
+                        " ".join(args.script_args),
+                    )
                 )
             )
-        )
-        print("sleep 10")
+            print("sleep 10")
 
 if __name__ == "__main__":
     main()
