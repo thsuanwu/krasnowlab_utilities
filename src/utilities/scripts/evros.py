@@ -148,7 +148,7 @@ def main():
 
     job_command = "; ".join(
         (
-            "PATH=/opt/conda/bin:${PATH}",
+            "PATH=/opt/conda/bin:/opt/cellranger-5.0.1:${PATH}",
             "echo $PATH",
             "source activate utilities-env",
             "git clone {}".format(REPO_ADDRESS),
