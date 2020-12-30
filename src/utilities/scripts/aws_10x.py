@@ -39,7 +39,6 @@ def main():
         help="The folder to store the alignment results",
     )
 
-    # optional arguments
     requiredNamed.add_argument(
         "--by_folder",
         required=False,
@@ -146,6 +145,5 @@ def main():
                 )
             )
             print("sleep 10")
-
 if __name__ == "__main__":
     main()
