@@ -191,41 +191,15 @@ def main(logger):
 
     s3 = boto3.resource("s3")
 
-    command = [
-        CELLRANGER,
-        "testrun",
-        "--id=tiny"
-    ]
-
-    failed = log_command(
-        logger,
-        command,
-        shell=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        universal_newlines=True,
-    )
-
-    if failed:
-        raise RuntimeError("cellranger test failed")
-
     # download the reference genome data
     logger.info(f"Downloading and extracting genome data {genome_name}")
 
-    s3_object = s3.Object(S3_REFERENCE[args.region], ref_genome_10x_file)
+    s3_genome_object = s3.Object(S3_REFERENCE[args.region], ref_genome_10x_file)
 
-    with tarfile.open(fileobj=s3_object.get()["Body"], mode="r|gz") as tf:
+    with tarfile.open(fileobj=s3_genome_object.get()["Body"], mode="r|gz") as tf:
         tf.extractall(path=genome_base_dir)
 
     sys.stdout.flush()
-
-    # double check
-    logger.info(f"Double checking genome file {genome_name}")
-    command = [
-        "ls",
-        f"{genome_base_dir}",
-    ]
-    log_command(logger, command, shell=True)
 
     # download the fastq files
     command = [
