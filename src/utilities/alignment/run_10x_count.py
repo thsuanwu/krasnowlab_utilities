@@ -178,8 +178,8 @@ def main(logger):
     #if args.region != "west" and genome_name not in ("HG38-PLUS", "MM10-PLUS"):
     #    raise ValueError(f"you must use --region west for {genome_name}")
 
-    #if args.region == "east":
-    #    ref_genome_10x_file = f"ref-genome/{ref_genome_10x_file}"
+    if args.region == "east":
+        ref_genome_10x_file = f"ref-genome/{ref_genome_10x_file}"
 
     logger.info(
         f"""Run Info: partition {args.partition_id} out of {args.num_partitions}
@@ -218,6 +218,14 @@ def main(logger):
         tf.extractall(path=genome_base_dir)
 
     sys.stdout.flush()
+
+    # double check
+    logger.info(f"Double checking genome file {genome_name}")
+    command = [
+        "ls",
+        f"{genome_base_dir}",
+    ]
+    log_command(logger, command, shell=True)
 
     # download the fastq files
     command = [
