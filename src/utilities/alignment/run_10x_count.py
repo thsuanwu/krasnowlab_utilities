@@ -236,7 +236,7 @@ def main(logger):
         "--nosecondary",
         "--disable-ui",
         f"--expect-cells={args.cell_count}",
-        f"--id={sample_prefix}",
+        f"--id={args.sample_prefix}",
         f"--fastqs={fastq_path}",
         f"--transcriptome={genome_dir}",
         f"--sample={sample_name}",
@@ -260,8 +260,8 @@ def main(logger):
         "s3",
         "sync",
         "--no-progress",
-        os.path.join(result_path, sample_prefix, "outs"),
-        posixpath.join(args.s3_output_path, sample_prefix),
+        os.path.join(result_path, args.sample_prefix, "outs"),
+        posixpath.join(args.s3_output_path, args.sample_prefix),
     ]
     for i in range(S3_RETRY):
         if not log_command(logger, command, shell=True):
