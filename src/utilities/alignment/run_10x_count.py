@@ -239,7 +239,7 @@ def main(logger):
         f"--id={args.sample_prefix}",
         f"--fastqs={fastq_path}",
         f"--transcriptome={genome_dir}",
-        f"--sample={sample_name}",
+        f"--sample={args.sample_prefix}",
     ]
 
     failed = log_command(
