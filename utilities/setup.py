@@ -32,7 +32,7 @@ setuptools.setup(
     zip_safe=False,
     install_requires=["boto3 >= 1.7.41"],
     extras_require={
-        "evros": ["aegea@https://github.com/thsuanwu/aegea/tarball/master#egg=aegea-0.0.1", "awscli >= 1.15.41", "awscli-cwlogs >= 1.4.4"],
+        "evros": ["aegea == 3.6.47", "awscli >= 1.15.41", "awscli-cwlogs >= 1.4.4"],
         "h5ad": ["anndata"],
     },
     entry_points={

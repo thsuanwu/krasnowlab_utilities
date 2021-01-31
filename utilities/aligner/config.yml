@@ -1,0 +1,25 @@
+build_docker_image:
+  base_image: ubuntu:16.04
+
+build_image:
+  commands:
+    $extend:
+      - "yes | apt-get update"
+      - "wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh"
+      - "bash /tmp/miniconda.sh -b -p $HOME/anaconda"
+      - "PATH=$HOME/anaconda/bin:$PATH"
+      - "conda config --set always_yes yes --set changeps1 no"
+      - "conda update -q conda"
+      - "conda config --add channels defaults"
+      - "conda config --add channels conda-forge"
+      - "conda config --add channels bioconda"
+      - "conda install -n root _license"
+      - "conda info -a"
+      - "conda install star"
+      - "conda install htseq"
+      - "conda install samtools"
+      - "wget http://downloads.sourceforge.net/project/skewer/Binaries/skewer-0.2.2-linux-x86_64 -O /usr/local/bin/skewer"
+      - "chmod +x /usr/local/bin/skewer"
+      - "git clone https://github.com/thsuanwu/utilities.git"
+      - "cd utilities"
+      - "python setup.py install"
