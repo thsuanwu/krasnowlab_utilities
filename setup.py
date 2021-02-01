@@ -30,7 +30,7 @@ setuptools.setup(
     ],
     include_package_data=True,
     zip_safe=False,
-    install_requires=["boto3 >= 1.7.41", "aegea@git+https://github.com/thsuanwu/aegea.git#egg=aegea-0.0.1"],
+    install_requires=["boto3 >= 1.7.41"],
     extras_require={
         "evros": ["aegea@git+https://github.com/thsuanwu/aegea.git#egg=aegea-0.0.1", "awscli >= 1.15.41", "awscli-cwlogs >= 1.4.4"],
         "h5ad": ["anndata"],
