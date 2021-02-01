@@ -233,7 +233,7 @@ def main(logger):
     command = [
         CELLRANGER,
         "count",
-        "--localmem=240",
+        #"--localmem=240", # By default, will use 90% of mem
         "--nosecondary",
         "--disable-ui",
         f"--expect-cells={args.cell_count}",
