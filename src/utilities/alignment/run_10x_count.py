@@ -24,6 +24,7 @@ reference_genomes = {
     "homo.gencode.v30.ERCC.chrM": "homo.gencode.v30.annotation.ERCC92",
     "homo.gencode.v30.ERCC.chrM.sars.cov2.wa1_cellranger-5.0": "homo.gencode.v30.annotation.ERCC92_and_sars.cov2.wa1_cellranger-5.0",
     "homo.gencode.v30.ERCC.chrM.sars.cov2.wa1_cellranger-3.0": "homo.gencode.v30.annotation.ERCC92_and_sars.cov2.wa1_cellranger-3.0",
+    "homo.gencode.v30.annotation.ERCC92_and_sars.cov2.wa1.GCA_009937905.1" : "homo.gencode.v30.annotation.ERCC92_and_sars.cov2.wa1.GCA_009937905.1",
     "mus": "MM10-PLUS",
     "mm10-plus": "MM10-PLUS",
     "mm10-1.2.0": "mm10-1.2.0",
