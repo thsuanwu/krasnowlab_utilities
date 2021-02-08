@@ -56,7 +56,7 @@ def main():
     image_group.add_argument(
         "--image",
         metavar="Docker Image",
-        default="thsuanwu/cellranger_3.0",
+        default="thsuanwu/cellranger",
         help="Docker image to use for the job",
     )
 
