@@ -18,14 +18,13 @@ def main():
     requiredNamed = parser.add_argument_group("required arguments")
 
     requiredNamed.add_argument(
-        "--image",
+        "--taxon",
         choices=list(reference_genomes.keys()),
         required=True,
         help="Reference genome for the alignment run, "
         "selected from the reference_genomes dictionary keys from "
         "alignment.run_10x_count.py",
     )
-
 
     requiredNamed.add_argument(
         "--s3_input_path",
