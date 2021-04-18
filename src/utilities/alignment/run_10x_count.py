@@ -223,11 +223,11 @@ def main(logger):
     logger.info(f"Running partition {args.partition_id} of {args.num_partitions}")
 
     # check the input folder for existing runs
-    sample_name = {
-        os.path.basename(fn).rsplit("_", 4)[0] for fn in fastq_path.glob("*fastq.gz")
-    }
-    assert len(sample_name) == 1, "Should only have one sample name to process"
-    sample_name = sample_name.pop()
+    #sample_name = {
+    #    os.path.basename(fn).rsplit("_", 4)[0] for fn in fastq_path.glob("*fastq.gz")
+    #}
+    #assert len(sample_name) == 1, "Should only have one sample name to process"
+    #sample_name = sample_name.pop()
 
     # Run cellranger
     os.chdir(result_path)
