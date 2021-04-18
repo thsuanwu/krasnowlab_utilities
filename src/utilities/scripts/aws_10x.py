@@ -18,13 +18,14 @@ def main():
     requiredNamed = parser.add_argument_group("required arguments")
 
     requiredNamed.add_argument(
-        "--taxon",
+        "--image",
         choices=list(reference_genomes.keys()),
         required=True,
         help="Reference genome for the alignment run, "
         "selected from the reference_genomes dictionary keys from "
         "alignment.run_10x_count.py",
     )
+
 
     requiredNamed.add_argument(
         "--s3_input_path",
@@ -45,6 +46,13 @@ def main():
         type=bool,
         default=False,
         help="Whether to parse run by sample folder or by sample prefix. Default is to use sample fastq files in same folder.",
+    )
+
+    requiredNamed.add_argument(
+        "--image",
+        required=False,
+        default="thsuanwu/cellranger",
+        help="Docker image"
     )
 
     parser.add_argument(
@@ -134,6 +142,7 @@ def main():
                         f"--branch {args.branch}",
                         "alignment.run_10x_count",
                         glacier_flag,
+                        f"--image {args.image}",
                         f"--taxon {args.taxon}",
                         f"--num_partitions {num_partitions}",
                         f"--partition_id {i}",
