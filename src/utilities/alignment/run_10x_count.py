@@ -75,7 +75,7 @@ def get_parser():
     )
 
     requiredNamed.add_argument(
-        "--sample_prefix", required=True, help="Specify sample prefix" # what is this for?
+        "--sample_prefix", required=False, help="Specify sample prefix" # what is this for?
     )
 
     requiredNamed.add_argument(
@@ -231,6 +231,7 @@ def main(logger):
 
     # Run cellranger
     os.chdir(result_path)
+
     command = [
         CELLRANGER,
         "count",
