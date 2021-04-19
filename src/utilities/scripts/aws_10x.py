@@ -39,13 +39,15 @@ def main():
         help="The folder to store the alignment results",
     )
 
-    requiredNamed.add_argument(
-        "--by_folder",
-        required=False,
-        type=bool,
-        default=False,
-        help="Whether to parse run by sample folder or by sample prefix. Default is to use sample fastq files in same folder.",
-    )
+    #requiredNamed.add_argument(
+    #    "--by_folder",
+    #    required=False,
+    #    type=bool,
+    #    default=False,
+    #    help="Whether to parse run by sample folder or by sample prefix. Default is to use sample fastq files in same folder.",
+    #)
+
+    requiredNamed.add_argument('--by_folder', action='store_true')
 
     requiredNamed.add_argument(
         "--image",
@@ -80,16 +82,17 @@ def main():
     # get the list of sample folder paths under the input folder
     if args.by_folder:
         s3_input_bucket, s3_input_prefix = s3u.s3_bucket_and_key(args.s3_input_path)
-    
-        s3_input_prefix += "/"
+
         sample_folder_paths = [
             folder_path for folder_path in s3u.get_folders(s3_input_bucket, s3_input_prefix)
         ]
+
+
         
         complete_input_paths = [
             "s3://" + s3_input_bucket + "/" + path for path in sample_folder_paths
         ]
-        # print input arguments of running alignment.run_10x_count for each sample folder
+
         num_partitions = len(complete_input_paths)
         glacier_flag = '--glacier' if args.glacier else ''
         for i in range(num_partitions):
