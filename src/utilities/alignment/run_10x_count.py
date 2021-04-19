@@ -106,6 +106,8 @@ def get_parser():
         "the default value here since we only have one sample",
     )
 
+    requiredNamed.add_argument('--by_folder', action='store_true')
+
     # optional arguments
     parser.add_argument("--cell_count", type=int, default=3000)
 
@@ -213,7 +215,7 @@ def main(logger):
         "--exclude",
         "'*'",
         "--include",
-        f"'{args.sample_prefix}*'",
+        f"'*{args.sample_prefix}*'",
         "--force-glacier-transfer" if args.glacier else "",
         args.s3_input_path,
         f"{fastq_path}",
@@ -232,7 +234,9 @@ def main(logger):
     # Run cellranger
     os.chdir(result_path)
 
-    command = [
+    if args.by_folder:
+        
+        command = [
         CELLRANGER,
         "count",
         "--localmem=240", # By default, will use 90% of mem
@@ -241,9 +245,23 @@ def main(logger):
         f"--expect-cells={args.cell_count}",
         f"--id={args.sample_prefix}",
         f"--fastqs={fastq_path}",
-        f"--transcriptome={genome_dir}",
-        f"--sample={args.sample_prefix}",
-    ]
+        f"--transcriptome={genome_dir}" # no sample_prefix: run all samples in folder
+        ]
+
+    else:
+
+        command = [
+            CELLRANGER,
+            "count",
+            "--localmem=240", # By default, will use 90% of mem
+            "--nosecondary",
+            "--disable-ui",
+            f"--expect-cells={args.cell_count}",
+            f"--id={args.sample_prefix}",
+            f"--fastqs={fastq_path}",
+            f"--transcriptome={genome_dir}",
+            f"--sample={args.sample_prefix}",
+        ]
 
     failed = log_command(
         logger,

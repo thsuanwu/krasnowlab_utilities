@@ -100,6 +100,7 @@ def main():
                         f"--sample_prefix {sample_fastq_prefix}",
                         f"--s3_input_path {s3_input_path}",
                         f"--s3_output_path {args.s3_output_path}",
+                        f"--by_folder",
                         " ".join(args.script_args),
                     )
                 )
