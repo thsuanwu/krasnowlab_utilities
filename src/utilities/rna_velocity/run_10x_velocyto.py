@@ -181,7 +181,8 @@ def main(logger):
                 s3_input_path:\t{args.s3_input_path}"""
     )
 
-    break
+    sys.exit(0)
+
 
     s3 = boto3.resource("s3")
 
@@ -230,7 +231,8 @@ def main(logger):
     # Run cellranger
     os.chdir(result_path)
 
-    break
+    sys.exit(0)
+
 
 
     if args.by_folder:
