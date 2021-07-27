@@ -9,7 +9,8 @@ import subprocess
 import tarfile
 import posixpath
 
-from utilities.log_util import get_logger, log_command
+from log_util import get_logger, log_command
+
 
 import boto3
 
@@ -75,7 +76,7 @@ def get_parser():
     )
 
     requiredNamed.add_argument(
-        "--sample_prefix", required=False, help="Specify sample prefix" # what is this for?
+        "--sample_prefix", required=False, help="Specify sample prefix"
     )
 
     requiredNamed.add_argument(
