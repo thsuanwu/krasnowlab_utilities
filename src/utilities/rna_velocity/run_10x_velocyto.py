@@ -62,14 +62,14 @@ def get_parser():
     requiredNamed.add_argument(
         "--taxon",
         required=True,
-        list(reference_genomes.keys()),
+        choices=list(reference_genomes.keys()),
         help="Reference genome for the velocyto run. Choose the same genome used in the alignment job.",
     )
 
     requiredNamed.add_argument(
         "--version_10x",
         required=True,
-        list(barcodes_10x.keys()),
+        choices=list(barcodes_10x.keys()),
         help="A barcode whitelist is the list of all known barcode sequences that have been included in the assay kit and are available during library preparation, corresponding to 10x technolgoy used.",
     )
 
