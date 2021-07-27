@@ -30,7 +30,7 @@ deprecated = {
 }
 
 # 10x barcodes for different versions
-`10x_barcodes` = {
+barcodes_10x = {
     "10x3v3": "3M-february-2018.txt",
     "10x3v2": "737K-august-2016.txt",
     "10x3v1": "737K-april-2014_rc.txt",
@@ -67,9 +67,9 @@ def get_parser():
     )
 
     requiredNamed.add_argument(
-        "--10x_version",
+        "--version_10x",
         required=True,
-        list(10x_barcodes.keys()),
+        list(barcodes_10x.keys()),
         help="A barcode whitelist is the list of all known barcode sequences that have been included in the assay kit and are available during library preparation, corresponding to 10x technolgoy used.",
     )
 
@@ -159,17 +159,17 @@ def main(logger):
         raise ValueError(f"unknown taxon {args.taxon}")
 
     # check if the input genome and region are valid
-    if args.`10x_version` in 10x_barcodes:
+    if args.version_10x in barcodes_10x:
 
-        barcode_name = 10x_barcodes[args.`10x_version`]
+        barcode_name = barcodes_10x[args.version_10x]
     else:
-        raise ValueError(f"unknown 10x version {args.`10x_version`}")
+        raise ValueError(f"unknown 10x version {args.version_10x}")
 
     genome_dir = genome_base_dir / genome_name
     ref_genome_10x_file = f"STAR-2.7.9a/{genome_name}.tgz"
 
-    barcode_dir = barcode_base_dir / 10x_version
-    10x_barcode_file = f"STAR-2.7.9a/{barcode_name}"
+    barcode_dir = barcode_base_dir / version_10x
+    barcode_10x_file = f"STAR-2.7.9a/{barcode_name}"
 
 
     logger.info(
@@ -177,7 +177,7 @@ def main(logger):
                    genome_dir:\t{genome_dir}
          ref_genome_10x_file:\t{ref_genome_10x_file}
                         taxon:\t{args.taxon}
-                        10x version:\t{args.`10x_version`}
+                        10x version:\t{args.`version_10x`}
                 s3_input_path:\t{args.s3_input_path}"""
     )
 
