@@ -183,13 +183,12 @@ def main(logger):
         f"""Run Info: partition {args.partition_id} out of {args.num_partitions}
             taxon:\t{args.taxon}
                 ref_genome_10x_file:\t{ref_genome_10x_file}   
-                    genome_dir:\t{genome_dir}   
+                genome_dir:\t{genome_dir}   
             10x version:\t{args.version_10x}
                 barcode_10x_file:\t{barcode_10x_file}
-                    barcode_dir:\t{barcode_dir}
-
+                barcode_dir:\t{barcode_dir}
                 s3_input_path:\t{args.s3_input_path}
-                s3_input_path:\t{args.s3_output_path}"""
+                s3_output_path:\t{args.s3_output_path}"""
     )
 
     sys.exit(0)
