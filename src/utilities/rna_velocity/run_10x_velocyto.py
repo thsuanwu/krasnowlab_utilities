@@ -30,7 +30,7 @@ deprecated = {
 }
 
 # 10x barcodes for different versions
-10x_barcodes = {
+`10x_barcodes` = {
     "10x3v3": "3M-february-2018.txt",
     "10x3v2": "737K-august-2016.txt",
     "10x3v1": "737K-april-2014_rc.txt",
