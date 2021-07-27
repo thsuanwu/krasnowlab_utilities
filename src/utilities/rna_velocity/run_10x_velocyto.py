@@ -21,7 +21,7 @@ S3_REFERENCE = {"east": "czbiohub-reference-east", "west": "czbiohub-reference",
 
 # valid and deprecated reference genomes
 reference_genomes = {
-    "homo.gencode.v30.annotation.ERCC92_and_sars.cov2.wa1": "homo.gencode.v30.annotation.ERCC92_and_sars.cov2.wa1",
+    "homo.gencode.v30.annotation.ERCC92.and.sars.cov2.wa1": "homo.gencode.v30.annotation.ERCC92.and.sars.cov2.wa1",
 }
 deprecated = {
     "homo": "hg38-plus",
@@ -200,7 +200,7 @@ def main(logger):
     logger.info(f"Downloading and extracting genome data {genome_name}")
     s3_genome_object = s3.Object(S3_REFERENCE[args.region], ref_genome_10x_file)
 
-    with tarfile.open(fileobj=s3_genome_object.get()["Body"], mode="r:gz") as tf:
+    with tarfile.open(fileobj=s3_genome_object.get()["Body"], mode="r|gz") as tf:
         tf.extractall(path=genome_base_dir)
 
     sys.stdout.flush()
