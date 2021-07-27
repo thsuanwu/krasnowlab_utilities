@@ -177,7 +177,7 @@ def main(logger):
                    genome_dir:\t{genome_dir}
          ref_genome_10x_file:\t{ref_genome_10x_file}
                         taxon:\t{args.taxon}
-                        10x version:\t{args.`version_10x`}
+                        10x version:\t{args.version_10x}
                 s3_input_path:\t{args.s3_input_path}"""
     )
 
