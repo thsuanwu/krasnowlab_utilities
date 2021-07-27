@@ -8,10 +8,8 @@ import time
 
 from utilities.log_util import get_logger, log_command
 import utilities.s3_util as s3u
-from utilities.alignment.run_star_and_htseq import reference_genomes, deprecated
 
 import boto3
-from boto3.s3.transfer import TransferConfig
 
 
 CURR_MIN_VER = datetime.datetime(2018, 10, 1, tzinfo=datetime.timezone.utc)
@@ -100,13 +98,6 @@ def get_parser():
     )
     
     requiredNamed.add_argument('--by_folder', action='store_true')
-
-    requiredNamed.add_argument( # what does this do?
-        "--input_dirs",
-        nargs="+",
-        required=True,
-        help="List of input folders to process",
-    )
 
     # optional arguments
     parser.add_argument(
