@@ -175,19 +175,21 @@ def main(logger):
     genome_dir = genome_base_dir / genome_name
     ref_genome_10x_file = f"STAR-2.7.9a/{genome_name}.tgz"
 
-    barcode_dir = barcode_base_dir
+    barcode_dir = barcode_base_dir / barcode_name
     barcode_10x_file = f"{barcode_name}"
 
 
     logger.info(
         f"""Run Info: partition {args.partition_id} out of {args.num_partitions}
-                   taxon:\t{args.taxon}
-                   genome_dir:\t{genome_dir}
-        ref_genome_10x_file:\t{ref_genome_10x_file}      
-                    10x version:\t{args.version_10x}
+            taxon:\t{args.taxon}
+                ref_genome_10x_file:\t{ref_genome_10x_file}   
+                    genome_dir:\t{genome_dir}   
+            10x version:\t{args.version_10x}
+                barcode_10x_file:\t{barcode_10x_file}
                     barcode_dir:\t{barcode_dir}
-        barcode_10x_file:\t{barcode_10x_file}
-                s3_input_path:\t{args.s3_input_path}"""
+
+                s3_input_path:\t{args.s3_input_path}
+                s3_input_path:\t{args.s3_output_path}"""
     )
 
     sys.exit(0)
