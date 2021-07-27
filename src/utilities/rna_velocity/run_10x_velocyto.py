@@ -191,8 +191,6 @@ def main(logger):
                 s3_output_path:\t{args.s3_output_path}"""
     )
 
-    sys.exit(0)
-
 
     s3 = boto3.resource("s3")
 
@@ -205,6 +203,8 @@ def main(logger):
         tf.extractall(path=genome_base_dir)
 
     sys.stdout.flush()
+
+    sys.exit(0)
 
     # download the fastq files
     command = [
