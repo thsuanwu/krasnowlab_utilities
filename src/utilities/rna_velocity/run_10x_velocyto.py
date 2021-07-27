@@ -158,7 +158,6 @@ def main(logger):
 
     # check if the input genome and region are valid
     if args.version_10x in barcodes_10x:
-
         barcode_name = barcodes_10x[args.version_10x]
     else:
         raise ValueError(f"unknown 10x version {args.version_10x}")
@@ -166,16 +165,18 @@ def main(logger):
     genome_dir = genome_base_dir / genome_name
     ref_genome_10x_file = f"STAR-2.7.9a/{genome_name}.tgz"
 
-    barcode_dir = barcode_base_dir / version_10x
-    barcode_10x_file = f"STAR-2.7.9a/{barcode_name}"
+    barcode_dir = barcode_base_dir
+    barcode_10x_file = f"{barcode_name}"
 
 
     logger.info(
         f"""Run Info: partition {args.partition_id} out of {args.num_partitions}
+                   taxon:\t{args.taxon}
                    genome_dir:\t{genome_dir}
-         ref_genome_10x_file:\t{ref_genome_10x_file}
-                        taxon:\t{args.taxon}
-                        10x version:\t{args.version_10x}
+        ref_genome_10x_file:\t{ref_genome_10x_file}      
+                    10x version:\t{args.version_10x}
+                    barcode_dir:\t{barcode_dir}
+        barcode_10x_file:\t{barcode_10x_file}
                 s3_input_path:\t{args.s3_input_path}"""
     )
 
