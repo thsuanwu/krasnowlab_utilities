@@ -142,13 +142,13 @@ def main(logger):
         fastq_path = result_path / "fastqs"
     else:
         fastq_path = result_path
-    fastq_path.mkdir(parents=True)
+    fastq_path.mkdir(parents=True, exist_ok=True)
 
     genome_base_dir = args.root_dir / "genome" / "STAR-2.7.9a"
-    genome_base_dir.mkdir(parents=True)
+    genome_base_dir.mkdir(parents=True, exist_ok=True)
 
     barcode_base_dir = args.root_dir / "barcodes"
-    barcode_base_dir.mkdir(parents=True)
+    barcode_base_dir.mkdir(parents=True, exist_ok=True)
 
     # check if the input genome and region are valid
     if args.taxon in reference_genomes:
