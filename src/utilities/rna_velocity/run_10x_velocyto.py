@@ -113,7 +113,8 @@ def get_parser():
         help="Use if 10x run was not demuxed locally (pre November 2019)",
     )
     parser.add_argument("--glacier", action="store_true")
-    parser.add_argument("--root_dir", default="/mnt")
+    #parser.add_argument("--root_dir", default="/mnt")
+    parser.add_argument("--root_dir", default="/home/ec2-user/tmp")
     return parser
 
 def main(logger):
