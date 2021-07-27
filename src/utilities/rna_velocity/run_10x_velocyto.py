@@ -194,17 +194,18 @@ def main(logger):
 
     s3 = boto3.resource("s3")
 
-    # download the reference genome data
-    logger.info(f"Downloading and extracting genome data {genome_name}")
 
+    # download the reference barcode & genome data
+    
+    logger.info(f"Downloading and extracting genome data {genome_name}")
     s3_genome_object = s3.Object(S3_REFERENCE[args.region], ref_genome_10x_file)
 
-    with tarfile.open(fileobj=s3_genome_object.get()["Body"], mode="r|gz") as tf:
+    with tarfile.open(fileobj=s3_genome_object.get()["Body"], mode="r:gz") as tf:
         tf.extractall(path=genome_base_dir)
 
     sys.stdout.flush()
 
-    sys.exit(0)
+    
 
     # download the fastq files
     command = [
