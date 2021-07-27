@@ -103,6 +103,16 @@ def get_parser():
 
     # optional arguments
     parser.add_argument(
+        "--region",
+        default="krasnow",
+        choices=("east", "west", "krasnow"),
+        help=(
+            "Region you're running jobs in."
+            " Should match the location of"
+            " the fastq.gz files"
+        ),
+    )
+    parser.add_argument(
         "--force_redo",
         action="store_true",
         help="Process files even when results already exist",
