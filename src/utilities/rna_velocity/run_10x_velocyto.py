@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import argparse
-import datetime
 import os
-import re
+import pathlib
+import sys
 import subprocess
-import time
+import tarfile
+import posixpath
 
 from utilities.log_util import get_logger, log_command
-import utilities.s3_util as s3u
 
 import boto3
 
