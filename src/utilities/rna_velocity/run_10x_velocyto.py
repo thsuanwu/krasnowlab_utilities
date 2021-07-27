@@ -107,7 +107,11 @@ def get_parser():
         action="store_true",
         help="Process files even when results already exist",
     )
-
+    parser.add_argument(
+        "--legacy",
+        action="store_true",
+        help="Use if 10x run was not demuxed locally (pre November 2019)",
+    )
     parser.add_argument("--glacier", action="store_true")
     parser.add_argument("--root_dir", default="/mnt")
     return parser
