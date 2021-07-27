@@ -176,7 +176,7 @@ def main(logger):
     ref_genome_10x_file = f"STAR-2.7.9a/{genome_name}.tgz"
 
     barcode_dir = barcode_base_dir / barcode_name
-    barcode_10x_file = f"{barcode_name}"
+    barcode_10x_file = f"STAR-2.7.9a/10x_barcode_whitelists/{barcode_name}"
 
 
     logger.info(
