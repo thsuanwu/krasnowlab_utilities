@@ -6,7 +6,7 @@ import re
 import subprocess
 import time
 
-import utilities.log_util as ut_log, get_logger, log_command
+from utilities.log_util import get_logger, log_command
 import utilities.s3_util as s3u
 from utilities.alignment.run_star_and_htseq import reference_genomes, deprecated
 
