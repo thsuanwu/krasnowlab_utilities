@@ -236,7 +236,7 @@ def main(logger):
     os.chdir(result_path)
 
     if args.by_folder:
-        
+
         command = [
         CELLRANGER,
         "count",
