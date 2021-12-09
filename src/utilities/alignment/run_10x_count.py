@@ -9,7 +9,7 @@ import subprocess
 import tarfile
 import posixpath
 
-from log_util import get_logger, log_command
+from utilities.log_util import get_logger, log_command
 
 
 import boto3
