@@ -77,7 +77,7 @@ def main():
 
         sample_folder_paths = [
             folder_path for folder_path in s3u.get_folders(s3_input_bucket, s3_input_prefix)
-        ]        
+        ]
         complete_input_paths = [
             "s3://" + s3_input_bucket + "/" + path for path in sample_folder_paths
         ]
@@ -106,21 +106,21 @@ def main():
                 )
             )
             print("sleep 10")
-        
+
     else:
     # get the list of sample fastq paths under the input folder
         s3_input_bucket, s3_input_prefix = s3u.s3_bucket_and_key(args.s3_input_path)
         sample_fastq_paths = [
             fastq_path for fastq_path in s3u.list_s3_keys(s3_input_bucket, s3_input_prefix, "fastq.gz")
         ]
-    
+
         sample_fastq_prefixes = {
         os.path.basename(fn).rsplit("_", 4)[0] for fn in sample_fastq_paths
         }
 
         if "Undetermined" in sample_fastq_prefixes:
             sample_fastq_prefixes.remove("Undetermined")
-        
+
         s3_input_path = "s3://" + s3_input_bucket + "/" + s3_input_prefix
 
         sample_fastq_prefixes = list(sample_fastq_prefixes) # convert to list type for iteration

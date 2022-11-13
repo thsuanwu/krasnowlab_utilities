@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import io
 import glob
@@ -32,7 +32,7 @@ setuptools.setup(
     zip_safe=False,
     install_requires=["boto3 >= 1.7.41"],
     extras_require={
-        "evros": ["aegea@git+https://github.com/thsuanwu/aegea.git#egg=aegea-0.0.1", "awscli >= 1.15.41", "awscli-cwlogs >= 1.4.4"],
+        "evros": ["aegea", "awscli >= 1.15.41", "awscli-cwlogs >= 1.4.4"],
         "h5ad": ["anndata"],
     },
     entry_points={
