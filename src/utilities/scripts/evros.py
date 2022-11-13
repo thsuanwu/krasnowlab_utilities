@@ -150,7 +150,7 @@ def main():
         (
             #"PATH=/opt/conda/bin:/opt/cellranger-7.0.1:${PATH}",
             #"echo $PATH",
-            "source activate utilities-env",
+            "conda activate utilities-env",
             "git clone {}".format(REPO_ADDRESS),
             "cd utilities",
             "python setup.py install",
