@@ -37,7 +37,7 @@ reference_genomes = {
     "GRCh38_premrna": "GRCh38_premrna",
     "zebrafish-plus": "danio_rerio_plus_STAR2.6.1d",
     "botryllus": "botryllus",
-    "Mmur3_cellranger_v7": "Mmur3_cellranger_v7"
+    "Mmur3-cellranger-7": "Mmur3-cellranger-7"
 }
 deprecated = {
     "homo": "hg38-plus",
