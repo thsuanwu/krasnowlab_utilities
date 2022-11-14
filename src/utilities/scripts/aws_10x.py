@@ -133,10 +133,10 @@ def main():
                 " ".join(
                     (
                         "evros",
+                        f"--image {args.image}",
                         f"--branch {args.branch}",
                         "alignment.run_10x_count",
                         glacier_flag,
-                        f"--image {args.image}",
                         f"--taxon {args.taxon}",
                         f"--num_partitions {num_partitions}",
                         f"--partition_id {i}",
