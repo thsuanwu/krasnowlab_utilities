@@ -205,6 +205,7 @@ def main(logger):
     with tarfile.open(fileobj=s3_genome_object.get()["Body"], mode="r|gz") as tf:
         tf.extractall(path=genome_base_dir)
 
+
     sys.stdout.flush()
 
     # download the fastq files
